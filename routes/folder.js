@@ -472,7 +472,7 @@ const router = express.Router();
 
 // Enable CORS with specific methods allowed
 router.use(cors({
-  origin: 'http://localhost:5173', // Frontend URL
+  origin: ['http://localhost:5173', "https://test-vite-app2.onrender.com"],// Frontend URL
   methods: ['GET', 'POST', 'DELETE'], // Allow only necessary methods
   allowedHeaders: ['Content-Type', 'Authorization'], // Allow necessary headers
 }));
