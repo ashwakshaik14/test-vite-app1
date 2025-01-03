@@ -378,7 +378,27 @@ const registerSchema = Joi.object({
 });
 
 // Registration route
+// router.post("/register", async (req, res) => {
+//   const { error } = registerSchema.validate(req.body);
+//   if (error) return res.status(400).json({ message: error.details[0].message });
+
+//   const { name, email, password } = req.body;
+//   try {
+//     if (await User.findOne({ email })) {
+//       return res.status(400).json({ message: "User already exists" });
+//     }
+//     const hashedPassword = await bcrypt.hash(password, 10);
+//     await User.create({ name, email, password: hashedPassword });
+//     res.status(201).json({ message: "User created successfully" });
+//   } catch (err) {
+//     console.error("Error in /register route:", err);
+//     res.status(500).json({ message: "Internal Server Error" });
+//   }
+// });
+
 router.post("/register", async (req, res) => {
+  console.log("Received data:", req.body);  // Log received data for debugging
+
   const { error } = registerSchema.validate(req.body);
   if (error) return res.status(400).json({ message: error.details[0].message });
 
@@ -387,14 +407,17 @@ router.post("/register", async (req, res) => {
     if (await User.findOne({ email })) {
       return res.status(400).json({ message: "User already exists" });
     }
+
     const hashedPassword = await bcrypt.hash(password, 10);
     await User.create({ name, email, password: hashedPassword });
     res.status(201).json({ message: "User created successfully" });
   } catch (err) {
-    console.error("Error in /register route:", err);
+    console.error("Error in /register route:", err);  // Log error details
     res.status(500).json({ message: "Internal Server Error" });
   }
 });
+
+
 
 // Login route
 router.post("/login", async (req, res) => {
